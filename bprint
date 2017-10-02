@@ -1,0 +1,34 @@
+#!/usr/bin/python3
+
+from PIL import Image, ImageFont, ImageDraw
+import argparse
+import os
+
+parser = argparse.ArgumentParser(description="Utility for printing on ptouch 700")
+parser.add_argument('--text', type=str, help="string to be printed", default="kokot")
+parser.add_argument('--height', type=int, help="height in pixels of loaded tape", default=64)
+parser.add_argument('--max-height', type=int, help="maximal height in pixels for printer", default=128)
+parser.add_argument('--rim', type=int, help="rim around the text in pixels", default=5)
+parser.add_argument('--font', type=str, help="name of truetype font", default="arial.ttf")
+
+args = parser.parse_args()
+
+fontsize = args.height - args.rim*2
+
+font = ImageFont.truetype("arial.ttf", fontsize)
+
+text_width, text_height = font.getsize(args.text)
+
+width = text_width + args.rim * 2
+
+image = Image.new("1", ( width, args.max_height ), 255)
+draw = ImageDraw.Draw( image )
+
+text_x = args.rim
+text_y = (args.max_height - args.height)/2
+
+draw.text((text_x,text_y), args.text, fill=0, font=font)
+
+image.save("out.pbm")
+
+os.system("./ptouch-770-write out.pbm ")
