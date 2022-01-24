@@ -19,6 +19,7 @@ jobs:
           githubToken: ${{ github.token }}
 
           run: |
+            sudo apt-get update && sudo apt install -y gcc make libudev-dev
             make
             echo ::set-output name=bin::ptouch-770-write-ubuntu18.04-armv7
 
