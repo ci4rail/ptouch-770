@@ -19,11 +19,11 @@ jobs:
           githubToken: ${{ github.token }}
 
           run: |
-            uname -a
+            binary=ptouch-write-ubuntu18.04-armv7-${{ github.ref_name }}
             apt-get update && apt install -y gcc make libudev-dev
             make
-            mv ptouch-770-write ptouch-770-write-ubuntu18.04-armv7
-            echo ::set-output name=bin::ptouch-770-write-ubuntu18.04-armv7
+            mv ptouch-770-write ${binary}
+            echo ::set-output name=bin::${binary}
 
       - name: Get the output
         # Echo the `uname` output parameter from the `runcmd` step
