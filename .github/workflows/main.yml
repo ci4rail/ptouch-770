@@ -25,11 +25,6 @@ jobs:
             mv ptouch-770-write ${binary}
             echo ::set-output name=bin::${binary}
 
-      - name: Get the output
-        # Echo the `uname` output parameter from the `runcmd` step
-        run: |
-          echo "The uname output was ${{ steps.runcmd.outputs.uname }}"
-
       - name: Release
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
